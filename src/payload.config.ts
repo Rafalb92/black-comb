@@ -8,6 +8,9 @@ import sharp from 'sharp'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 
+import { pl } from '@payloadcms/translations/languages/pl'
+import { en } from '@payloadcms/translations/languages/en'
+
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
@@ -16,6 +19,11 @@ export default buildConfig({
     user: Users.slug,
     importMap: {
       baseDir: path.resolve(dirname),
+    },
+    meta: {
+      title: 'Black Comb CMS',
+      titleSuffix: '— Black Comb',
+      description: 'Panel zarządzania treścią Black Comb Barbershop',
     },
   },
   collections: [Users, Media],
@@ -29,6 +37,12 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URL || '',
     },
   }),
+  i18n: {
+    supportedLanguages: { en, pl },
+    fallbackLanguage: 'pl',
+  },
+  defaultDepth: 1,
+  maxDepth: 5,
   sharp,
   plugins: [],
 })
