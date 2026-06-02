@@ -87,8 +87,12 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    siteSettings: SiteSetting;
+  };
+  globalsSelect: {
+    siteSettings: SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -391,6 +395,59 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * Global site settings — navigation, contact, footer.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "siteSettings".
+ */
+export interface SiteSetting {
+  id: number;
+  /**
+   * Optional. If empty, "Black Comb" text will be shown.
+   */
+  logo?: (number | null) | Media;
+  /**
+   * Text shown when logo is not uploaded. Used in SEO as well.
+   */
+  brandText: string;
+  /**
+   * Menu items (max 6). Each anchor must match a section id on the page.
+   */
+  navLinks?:
+    | {
+        /**
+         * Visible menu text, e.g. "Services".
+         */
+        label: string;
+        /**
+         * Section identifier without #, e.g. "services". Allowed: lowercase letters, numbers, hyphens.
+         */
+        anchor: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "siteSettings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  logo?: T;
+  brandText?: T;
+  navLinks?:
+    | T
+    | {
+        label?: T;
+        anchor?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
