@@ -11,6 +11,7 @@ import { Media } from './collections/Media'
 import { pl } from '@payloadcms/translations/languages/pl'
 import { en } from '@payloadcms/translations/languages/en'
 import { SiteSettings } from './globals/SiteSettings'
+import { Homepage } from './globals/Homepage'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -28,7 +29,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media],
-  globals: [SiteSettings],
+  globals: [SiteSettings, Homepage],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
