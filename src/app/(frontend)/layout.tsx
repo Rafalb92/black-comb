@@ -1,7 +1,8 @@
 import { getPayloadClient } from '@/lib/payload'
-import { Navbar } from '@/components/navabr'
 import type { Metadata } from 'next'
 import '../globals.css'
+import { NavbarClient } from '@/components/navbar-client'
+import { Navbar } from '@/components/navabr'
 
 export const metadata: Metadata = {
   title: 'Black Comb — Barbershop',
@@ -18,7 +19,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="pl">
       <body>
-        <Navbar settings={settings} />
+        <NavbarClient initialData={settings} />
         {children}
       </body>
     </html>

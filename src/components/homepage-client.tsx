@@ -8,6 +8,11 @@ type Props = {
   initialData: Homepage
 }
 
+// Type guard: czy obiekt to faktycznie Homepage?
+function isHomepage(value: unknown): value is Homepage {
+  return typeof value === 'object' && value !== null && 'heroSection' in value
+}
+
 export function HomepageClient({ initialData }: Props) {
   const { data } = useLivePreview<Homepage>({
     initialData,
@@ -15,10 +20,13 @@ export function HomepageClient({ initialData }: Props) {
     depth: 2,
   })
 
+  // Jeśli postMessage przyszedł z innego globala (np. siteSettings),
+  // data nie ma kształtu Homepage — wracamy do initialData
+  const safeData = isHomepage(data) ? data : initialData
+
   return (
     <main>
-      <Hero data={data.heroSection} />
-      {/* Kolejne sekcje będą dodawane tutaj */}
+      <Hero data={safeData.heroSection} />
     </main>
   )
 }
