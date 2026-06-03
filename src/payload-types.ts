@@ -471,6 +471,24 @@ export interface Homepage {
       anchor?: string | null;
     };
   };
+  /**
+   * Bar between Hero and About sections with looping keywords.
+   */
+  keywordsBanner?: {
+    /**
+     * Disable to temporarily hide the banner without removing keywords.
+     */
+    isEnabled?: boolean | null;
+    /**
+     * 3 to 8 words. Keep them short, ideally one or two words each.
+     */
+    keywords?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -508,6 +526,17 @@ export interface HomepageSelect<T extends boolean = true> {
           | {
               label?: T;
               anchor?: T;
+            };
+      };
+  keywordsBanner?:
+    | T
+    | {
+        isEnabled?: T;
+        keywords?:
+          | T
+          | {
+              text?: T;
+              id?: T;
             };
       };
   updatedAt?: T;

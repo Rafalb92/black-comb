@@ -113,5 +113,57 @@ export const Homepage: GlobalConfig = {
         },
       ],
     },
+    {
+      name: 'keywordsBanner',
+      label: { pl: 'Baner ze słowami kluczowymi', en: 'Keywords Banner' },
+      type: 'group',
+      admin: {
+        description: {
+          pl: 'Pasek między sekcją Hero a O nas, ze słowami kluczowymi przewijającymi się w pętli.',
+          en: 'Bar between Hero and About sections with looping keywords.',
+        },
+      },
+      fields: [
+        {
+          name: 'isEnabled',
+          label: { pl: 'Pokazuj baner', en: 'Show banner' },
+          type: 'checkbox',
+          defaultValue: true,
+          admin: {
+            description: {
+              pl: 'Wyłącz, aby tymczasowo ukryć baner bez usuwania słów.',
+              en: 'Disable to temporarily hide the banner without removing keywords.',
+            },
+          },
+        },
+        {
+          name: 'keywords',
+          label: { pl: 'Słowa kluczowe', en: 'Keywords' },
+          type: 'array',
+          minRows: 3,
+          maxRows: 8,
+          labels: {
+            singular: { pl: 'Słowo', en: 'Keyword' },
+            plural: { pl: 'Słowa', en: 'Keywords' },
+          },
+          admin: {
+            description: {
+              pl: 'Od 3 do 8 słów. Krótkie, jednowyrazowe lub maksymalnie dwa wyrazy. Np. „profesjonalizm", „klasyka", „precyzja".',
+              en: '3 to 8 words. Keep them short, ideally one or two words each.',
+            },
+            condition: (_, siblingData) => siblingData?.isEnabled === true,
+          },
+          fields: [
+            {
+              name: 'text',
+              label: { pl: 'Tekst', en: 'Text' },
+              type: 'text',
+              required: true,
+              maxLength: 30,
+            },
+          ],
+        },
+      ],
+    },
   ],
 }
