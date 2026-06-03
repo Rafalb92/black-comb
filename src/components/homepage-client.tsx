@@ -3,6 +3,7 @@
 import { useLivePreview } from '@payloadcms/live-preview-react'
 import type { Homepage } from '@/payload-types'
 import { Hero } from '@/components/sections/Hero'
+import { KeywordsBanner } from './sections/KeywordsBanner'
 
 type Props = {
   initialData: Homepage
@@ -27,6 +28,7 @@ export function HomepageClient({ initialData }: Props) {
   return (
     <main>
       <Hero data={safeData.heroSection} />
+      {safeData.keywordsBanner?.isEnabled && <KeywordsBanner data={safeData.keywordsBanner} />}
     </main>
   )
 }
