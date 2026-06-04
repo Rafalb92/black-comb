@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    services: Service;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,6 +79,7 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    services: ServicesSelect<false> | ServicesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -208,6 +210,53 @@ export interface Media {
   };
 }
 /**
+ * Services displayed in the Services section on the homepage.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services".
+ */
+export interface Service {
+  id: number;
+  /**
+   * Service name.
+   */
+  title: string;
+  /**
+   * Auto-generated from title. Editable. Lowercase, digits, hyphens.
+   */
+  slug: string;
+  /**
+   * One-two sentences on the service card. Max 160 characters.
+   */
+  shortDescription: string;
+  /**
+   * Price as text. E.g. "80 PLN", "from 80 PLN", "Custom quote".
+   */
+  priceLabel: string;
+  /**
+   * Duration as text. E.g. "30 min", "60-90 min", "about 1h".
+   */
+  durationLabel: string;
+  /**
+   * Optional service image.
+   */
+  image?: (number | null) | Media;
+  /**
+   * Lower number = higher in list.
+   */
+  order?: number | null;
+  /**
+   * Show "Popular" badge on the card. Highlight max 2-3 services.
+   */
+  isPopular?: boolean | null;
+  /**
+   * Uncheck to hide the service without deleting it.
+   */
+  isActive?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -238,6 +287,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'services';
+        value: number | Service;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -357,6 +410,23 @@ export interface MediaSelect<T extends boolean = true> {
               filename?: T;
             };
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services_select".
+ */
+export interface ServicesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  shortDescription?: T;
+  priceLabel?: T;
+  durationLabel?: T;
+  image?: T;
+  order?: T;
+  isPopular?: T;
+  isActive?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -544,6 +614,18 @@ export interface Homepage {
      */
     image: number | Media;
   };
+  /**
+   * Services section heading. Service items are managed in the Services collection.
+   */
+  servicesSection: {
+    isEnabled?: boolean | null;
+    eyebrow?: string | null;
+    title: string;
+    /**
+     * Short description under title. Optional.
+     */
+    description?: string | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -609,6 +691,14 @@ export interface HomepageSelect<T extends boolean = true> {
               id?: T;
             };
         image?: T;
+      };
+  servicesSection?:
+    | T
+    | {
+        isEnabled?: T;
+        eyebrow?: T;
+        title?: T;
+        description?: T;
       };
   updatedAt?: T;
   createdAt?: T;

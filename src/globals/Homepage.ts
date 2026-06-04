@@ -297,5 +297,47 @@ export const Homepage: GlobalConfig = {
         },
       ],
     },
+    {
+      name: 'servicesSection',
+      label: { pl: 'Sekcja Usługi', en: 'Services Section' },
+      type: 'group',
+      admin: {
+        description: {
+          pl: 'Nagłówek sekcji Usługi. Same usługi dodajesz w kolekcji "Usługi".',
+          en: 'Services section heading. Service items are managed in the Services collection.',
+        },
+      },
+      fields: [
+        {
+          name: 'isEnabled',
+          label: { pl: 'Pokazuj sekcję', en: 'Show section' },
+          type: 'checkbox',
+          defaultValue: true,
+        },
+        {
+          name: 'eyebrow',
+          label: { pl: 'Etykieta nad tytułem', en: 'Eyebrow' },
+          type: 'text',
+        },
+        {
+          name: 'title',
+          label: { pl: 'Tytuł', en: 'Title' },
+          type: 'text',
+          required: true,
+          defaultValue: 'Usługi',
+        },
+        {
+          name: 'description',
+          label: { pl: 'Opis', en: 'Description' },
+          type: 'textarea',
+          admin: {
+            description: {
+              pl: 'Krótki opis pod tytułem. Opcjonalnie.',
+              en: 'Short description under title. Optional.',
+            },
+          },
+        },
+      ],
+    },
   ],
 }

@@ -11,17 +11,26 @@ import { getPayloadClient } from '@/lib/payload'
 export default async function HomePage() {
   // const headers = await getHeaders()
   const payload = await getPayloadClient()
-  const homepage = await payload.findGlobal({
-    slug: 'homepage',
-    depth: 2,
-  })
+  const [homepage, services] = await Promise.all([
+    payload.findGlobal({
+      slug: 'homepage',
+      depth: 2,
+    }),
+    payload.find({
+      collection: 'services',
+      where: { isActive: { equals: true } },
+      sort: 'order',
+      limit: 100,
+      depth: 1,
+    }),
+  ])
   // const { user } = await payload.auth({ headers })
 
   const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
 
   return (
     <main>
-      <HomepageClient initialData={homepage} /> {/* Kolejne sekcje będą dodawane tutaj */}
+      <HomepageClient initialData={homepage} initialServices={services.docs} />{' '}
     </main>
   )
 }
