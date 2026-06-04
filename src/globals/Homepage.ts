@@ -1,3 +1,9 @@
+import {
+  BoldFeature,
+  ItalicFeature,
+  lexicalEditor,
+  ParagraphFeature,
+} from '@payloadcms/richtext-lexical'
 import type { GlobalConfig } from 'payload'
 
 export const Homepage: GlobalConfig = {
@@ -162,6 +168,132 @@ export const Homepage: GlobalConfig = {
               maxLength: 30,
             },
           ],
+        },
+      ],
+    },
+    {
+      name: 'aboutSection',
+      label: { pl: 'Sekcja O nas', en: 'About Section' },
+      type: 'group',
+      admin: {
+        description: {
+          pl: 'Sekcja przedstawiająca zakład. Możesz tymczasowo ukryć sekcję przełącznikiem na górze, dane pozostaną zachowane.',
+          en: 'Section introducing the shop. You can temporarily hide the section with the toggle at the top, data remains saved.',
+        },
+      },
+      fields: [
+        {
+          name: 'isEnabled',
+          label: { pl: 'Pokazuj sekcję', en: 'Show section' },
+          type: 'checkbox',
+          defaultValue: true,
+          admin: {
+            description: {
+              pl: 'Wyłącz, aby tymczasowo ukryć sekcję na stronie.',
+              en: 'Disable to temporarily hide the section on the page.',
+            },
+          },
+        },
+        {
+          name: 'eyebrow',
+          label: { pl: 'Etykieta nad tytułem', en: 'Eyebrow' },
+          type: 'text',
+          admin: {
+            description: {
+              pl: 'Opcjonalna mała etykieta nad tytułem, np. „Kim jesteśmy".',
+              en: 'Optional small label above the title.',
+            },
+          },
+        },
+        {
+          name: 'title',
+          label: { pl: 'Tytuł', en: 'Title' },
+          type: 'text',
+          required: true,
+          admin: {
+            description: {
+              pl: 'Główny tytuł sekcji. Np. „Black Comb — barbershop z duszą".',
+              en: 'Main section title.',
+            },
+          },
+        },
+        {
+          name: 'description',
+          label: { pl: 'Opis', en: 'Description' },
+          type: 'richText',
+          required: true,
+          editor: lexicalEditor({
+            features: () => [ParagraphFeature(), BoldFeature(), ItalicFeature()],
+          }),
+          admin: {
+            description: {
+              pl: 'Dwa-trzy akapity o zakładzie. Możesz pogrubić ważne słowa.',
+              en: 'Two-three paragraphs about the shop. You can bold key words.',
+            },
+          },
+        },
+        {
+          name: 'stats',
+          label: { pl: 'Statystyki', en: 'Stats' },
+          type: 'array',
+          minRows: 0,
+          maxRows: 4,
+          labels: {
+            singular: { pl: 'Statystyka', en: 'Stat' },
+            plural: { pl: 'Statystyki', en: 'Stats' },
+          },
+          admin: {
+            description: {
+              pl: 'Opcjonalna lista liczb / faktów. Maksymalnie 4. Zostaw pustą jeśli nie chcesz pokazywać.',
+              en: 'Optional list of numbers / facts. Up to 4. Leave empty to hide.',
+            },
+          },
+          fields: [
+            {
+              type: 'row',
+              fields: [
+                {
+                  name: 'value',
+                  label: { pl: 'Wartość', en: 'Value' },
+                  type: 'text',
+                  required: true,
+                  admin: {
+                    width: '40%',
+                    description: {
+                      pl: 'Liczba lub krótkie hasło. Np. „7 lat", „1200+", „5".',
+                      en: 'Number or short value. E.g. "7 years", "1200+", "5".',
+                    },
+                  },
+                },
+                {
+                  name: 'label',
+                  label: { pl: 'Etykieta', en: 'Label' },
+                  type: 'text',
+                  required: true,
+                  admin: {
+                    width: '60%',
+                    description: {
+                      pl: 'Co opisuje wartość. Np. „doświadczenia", „zadowolonych klientów", „fryzjerów".',
+                      en: 'What the value describes.',
+                    },
+                  },
+                },
+              ],
+            },
+          ],
+        },
+        {
+          name: 'image',
+          label: { pl: 'Zdjęcie', en: 'Image' },
+          type: 'upload',
+          relationTo: 'media',
+          required: true,
+          admin: {
+            description: {
+              pl: 'Zdjęcie wnętrza lub szczegółu z zakładu. Wyświetli się obok tekstu.',
+              en: 'Photo of the interior. Displayed next to the text.',
+            },
+          },
         },
       ],
     },
