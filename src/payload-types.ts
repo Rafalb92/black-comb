@@ -489,6 +489,61 @@ export interface Homepage {
         }[]
       | null;
   };
+  /**
+   * Section introducing the shop. You can temporarily hide the section with the toggle at the top, data remains saved.
+   */
+  aboutSection: {
+    /**
+     * Disable to temporarily hide the section on the page.
+     */
+    isEnabled?: boolean | null;
+    /**
+     * Optional small label above the title.
+     */
+    eyebrow?: string | null;
+    /**
+     * Main section title.
+     */
+    title: string;
+    /**
+     * Two-three paragraphs about the shop. You can bold key words.
+     */
+    description: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    };
+    /**
+     * Optional list of numbers / facts. Up to 4. Leave empty to hide.
+     */
+    stats?:
+      | {
+          /**
+           * Number or short value. E.g. "7 years", "1200+", "5".
+           */
+          value: string;
+          /**
+           * What the value describes.
+           */
+          label: string;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Photo of the interior. Displayed next to the text.
+     */
+    image: number | Media;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -538,6 +593,22 @@ export interface HomepageSelect<T extends boolean = true> {
               text?: T;
               id?: T;
             };
+      };
+  aboutSection?:
+    | T
+    | {
+        isEnabled?: T;
+        eyebrow?: T;
+        title?: T;
+        description?: T;
+        stats?:
+          | T
+          | {
+              value?: T;
+              label?: T;
+              id?: T;
+            };
+        image?: T;
       };
   updatedAt?: T;
   createdAt?: T;

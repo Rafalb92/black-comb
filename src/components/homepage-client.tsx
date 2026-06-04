@@ -4,6 +4,7 @@ import { useLivePreview } from '@payloadcms/live-preview-react'
 import type { Homepage } from '@/payload-types'
 import { Hero } from '@/components/sections/Hero'
 import { KeywordsBanner } from './sections/KeywordsBanner'
+import { About } from './sections/About'
 
 type Props = {
   initialData: Homepage
@@ -29,6 +30,7 @@ export function HomepageClient({ initialData }: Props) {
     <main>
       <Hero data={safeData.heroSection} />
       {safeData.keywordsBanner?.isEnabled && <KeywordsBanner data={safeData.keywordsBanner} />}
+      {safeData.aboutSection?.isEnabled && <About data={safeData.aboutSection} />}
     </main>
   )
 }

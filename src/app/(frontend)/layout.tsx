@@ -2,7 +2,7 @@ import { getPayloadClient } from '@/lib/payload'
 import type { Metadata } from 'next'
 import '../globals.css'
 import { NavbarClient } from '@/components/navbar-client'
-import { Navbar } from '@/components/navabr'
+import { Navbar } from '@/components/navbar'
 
 export const metadata: Metadata = {
   title: 'Black Comb — Barbershop',
