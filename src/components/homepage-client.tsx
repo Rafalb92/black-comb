@@ -1,29 +1,28 @@
 'use client'
 
 import { useLivePreview } from '@payloadcms/live-preview-react'
-import type { Homepage } from '@/payload-types'
+import type { Homepage, Service } from '@/payload-types'
 import { Hero } from '@/components/sections/Hero'
-import { KeywordsBanner } from './sections/KeywordsBanner'
-import { About } from './sections/About'
+import { KeywordsBanner } from '@/components/sections/KeywordsBanner'
+import { About } from '@/components/sections/About'
+import { Services } from '@/components/sections/Services'
 
 type Props = {
   initialData: Homepage
+  initialServices: Service[]
 }
 
-// Type guard: czy obiekt to faktycznie Homepage?
 function isHomepage(value: unknown): value is Homepage {
   return typeof value === 'object' && value !== null && 'heroSection' in value
 }
 
-export function HomepageClient({ initialData }: Props) {
+export function HomepageClient({ initialData, initialServices }: Props) {
   const { data } = useLivePreview<Homepage>({
     initialData,
     serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3000',
     depth: 2,
   })
 
-  // Jeśli postMessage przyszedł z innego globala (np. siteSettings),
-  // data nie ma kształtu Homepage — wracamy do initialData
   const safeData = isHomepage(data) ? data : initialData
 
   return (
@@ -31,6 +30,9 @@ export function HomepageClient({ initialData }: Props) {
       <Hero data={safeData.heroSection} />
       {safeData.keywordsBanner?.isEnabled && <KeywordsBanner data={safeData.keywordsBanner} />}
       {safeData.aboutSection?.isEnabled && <About data={safeData.aboutSection} />}
+      {safeData.servicesSection?.isEnabled && (
+        <Services sectionData={safeData.servicesSection} services={initialServices} />
+      )}
     </main>
   )
 }

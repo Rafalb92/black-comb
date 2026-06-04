@@ -13,10 +13,7 @@ export function Hero({ data }: Props) {
   const ctaAnchor = cta?.anchor || 'book'
 
   return (
-    <section
-      id="hero"
-      className="flex min-h-[calc(100svh-4.5rem)] flex-col lg:flex-row"
-    >
+    <section id="hero" className="flex min-h-[calc(100svh-4.5rem)] flex-col lg:flex-row">
       {/* Left — image */}
       <div className="relative h-72 w-full shrink-0 sm:h-96 lg:h-auto lg:w-1/2 overflow-hidden">
         {bg?.url ? (
@@ -27,13 +24,7 @@ export function Hero({ data }: Props) {
               fill
               priority
               sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover"
-              style={{
-                objectPosition:
-                  bg.focalX != null && bg.focalY != null
-                    ? `${bg.focalX}% ${bg.focalY}%`
-                    : 'center',
-              }}
+              className="object-cover object-[50%_30%] "
             />
             {/* Fade into content panel on large screens */}
             <div className="absolute inset-y-0 right-0 w-32 bg-linear-to-l from-white to-transparent hidden lg:block" />
@@ -56,9 +47,7 @@ export function Hero({ data }: Props) {
           </h1>
 
           {subtitle && (
-            <p className="mt-6 text-base text-zinc-500 leading-relaxed sm:text-lg">
-              {subtitle}
-            </p>
+            <p className="mt-6 text-base text-zinc-500 leading-relaxed sm:text-lg">{subtitle}</p>
           )}
 
           <div className="mt-10">

@@ -29,6 +29,33 @@ export function About({ data }: Props) {
             {title}
           </h2>
 
+          {/* Mobile-only image — full-width, between title and description */}
+          {img?.url ? (
+            <div className="-mx-8 mt-8 lg:hidden">
+              <div className="relative aspect-3/4 w-full overflow-hidden rounded-2xl shadow-md">
+                <Image
+                  src={img.url}
+                  alt={img.alt || title}
+                  fill
+                  sizes="100vw"
+                  className="object-cover"
+                  style={{
+                    objectPosition:
+                      img.focalX != null && img.focalY != null
+                        ? `${img.focalX}% ${img.focalY}%`
+                        : 'top',
+                  }}
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="-mx-8 mt-8 lg:hidden">
+              <div className="aspect-3/4 w-full overflow-hidden rounded-2xl bg-zinc-100 flex items-center justify-center">
+                <span className="text-zinc-400 text-xs tracking-widest uppercase">Brak zdjęcia</span>
+              </div>
+            </div>
+          )}
+
           <div className="prose prose-zinc mt-6 max-w-none text-zinc-500 [&_p]:leading-relaxed [&_p]:text-base sm:[&_p]:text-lg">
             <RichText data={description} />
           </div>
@@ -52,28 +79,28 @@ export function About({ data }: Props) {
           )}
         </div>
 
-        {/* Right — image */}
+        {/* Desktop-only right column image */}
         {img?.url ? (
-          <div className="lg:flex-2">
-            <div className="relative mx-auto aspect-3/4 w-full max-w-sm overflow-hidden rounded-3xl shadow-md lg:max-w-none">
+          <div className="hidden lg:block lg:flex-2">
+            <div className="relative aspect-3/4 w-full overflow-hidden rounded-3xl shadow-md">
               <Image
                 src={img.url}
                 alt={img.alt || title}
                 fill
-                sizes="(max-width: 1024px) 90vw, 38vw"
+                sizes="38vw"
                 className="object-cover"
                 style={{
                   objectPosition:
                     img.focalX != null && img.focalY != null
                       ? `${img.focalX}% ${img.focalY}%`
-                      : 'center',
+                      : 'top',
                 }}
               />
             </div>
           </div>
         ) : (
-          <div className="lg:flex-2">
-            <div className="mx-auto aspect-3/4 w-full max-w-sm overflow-hidden rounded-3xl bg-zinc-100 lg:max-w-none flex items-center justify-center">
+          <div className="hidden lg:flex lg:flex-2">
+            <div className="aspect-3/4 w-full overflow-hidden rounded-3xl bg-zinc-100 flex items-center justify-center">
               <span className="text-zinc-400 text-xs tracking-widest uppercase">Brak zdjęcia</span>
             </div>
           </div>

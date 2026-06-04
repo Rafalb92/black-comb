@@ -12,6 +12,7 @@ import { pl } from '@payloadcms/translations/languages/pl'
 import { en } from '@payloadcms/translations/languages/en'
 import { SiteSettings } from './globals/SiteSettings'
 import { Homepage } from './globals/Homepage'
+import { Services } from './collections/Services'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -50,7 +51,7 @@ export default buildConfig({
       ],
     },
   },
-  collections: [Users, Media],
+  collections: [Users, Media, Services],
   globals: [SiteSettings, Homepage],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
