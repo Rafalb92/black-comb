@@ -1,21 +1,12 @@
-import { headers as getHeaders } from 'next/headers.js'
-import Image from 'next/image'
-import React from 'react'
-import { fileURLToPath } from 'url'
-import { Hero } from '@/components/sections/Hero'
-
-import config from '@/payload.config'
+import { getPayload } from 'payload'
+import config from '@payload-config'
 import { HomepageClient } from '@/components/homepage-client'
-import { getPayloadClient } from '@/lib/payload'
 
 export default async function HomePage() {
-  // const headers = await getHeaders()
-  const payload = await getPayloadClient()
-  const [homepage, services] = await Promise.all([
-    payload.findGlobal({
-      slug: 'homepage',
-      depth: 2,
-    }),
+  const payload = await getPayload({ config })
+
+  const [homepage, services, testimonials] = await Promise.all([
+    payload.findGlobal({ slug: 'homepage', depth: 2 }),
     payload.find({
       collection: 'services',
       where: { isActive: { equals: true } },
@@ -23,14 +14,20 @@ export default async function HomePage() {
       limit: 100,
       depth: 1,
     }),
+    payload.find({
+      collection: 'testimonials',
+      where: { isActive: { equals: true } },
+      sort: 'order',
+      limit: 100,
+      depth: 1,
+    }),
   ])
-  // const { user } = await payload.auth({ headers })
-
-  const fileURL = `vscode://file/${fileURLToPath(import.meta.url)}`
 
   return (
-    <main>
-      <HomepageClient initialData={homepage} initialServices={services.docs} />{' '}
-    </main>
+    <HomepageClient
+      initialData={homepage}
+      initialServices={services.docs}
+      initialTestimonials={testimonials.docs}
+    />
   )
 }
