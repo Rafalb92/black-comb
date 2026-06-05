@@ -339,5 +339,41 @@ export const Homepage: GlobalConfig = {
         },
       ],
     },
+    {
+      name: 'testimonialsSection',
+      label: { pl: 'Sekcja Opinie', en: 'Testimonials Section' },
+      type: 'group',
+      admin: {
+        description: {
+          pl: 'Nagłówek sekcji Opinie. Same opinie dodajesz w kolekcji "Opinie".',
+          en: 'Testimonials section heading. Items managed in Testimonials collection.',
+        },
+      },
+      fields: [
+        {
+          name: 'isEnabled',
+          label: { pl: 'Pokazuj sekcję', en: 'Show section' },
+          type: 'checkbox',
+          defaultValue: true,
+        },
+        {
+          name: 'eyebrow',
+          label: { pl: 'Etykieta nad tytułem', en: 'Eyebrow' },
+          type: 'text',
+        },
+        {
+          name: 'title',
+          label: { pl: 'Tytuł', en: 'Title' },
+          type: 'text',
+          required: true,
+          defaultValue: 'Opinie klientów',
+        },
+        {
+          name: 'description',
+          label: { pl: 'Opis', en: 'Description' },
+          type: 'textarea',
+        },
+      ],
+    },
   ],
 }

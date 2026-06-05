@@ -70,6 +70,7 @@ export interface Config {
     users: User;
     media: Media;
     services: Service;
+    testimonials: Testimonial;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -80,6 +81,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     services: ServicesSelect<false> | ServicesSelect<true>;
+    testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -257,6 +259,49 @@ export interface Service {
   createdAt: string;
 }
 /**
+ * Customer testimonials displayed on the homepage.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials".
+ */
+export interface Testimonial {
+  id: number;
+  /**
+   * Testimonial content. Max 500 characters.
+   */
+  content: string;
+  /**
+   * E.g. "John Doe" or "Anna K.".
+   */
+  authorName: string;
+  /**
+   * Optional. E.g. "Regular customer", "Client since 2021".
+   */
+  authorRole?: string | null;
+  /**
+   * Optional. Initials shown as fallback.
+   */
+  authorAvatar?: (number | null) | Media;
+  /**
+   * From 1.00 to 5.00 with 0.25 step.
+   */
+  rating: number;
+  /**
+   * Where the testimonial comes from.
+   */
+  source: 'google' | 'facebook' | 'instagram' | 'email' | 'in-person' | 'other';
+  /**
+   * Lower number = higher.
+   */
+  order?: number | null;
+  /**
+   * Uncheck to hide without deleting.
+   */
+  isActive?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -291,6 +336,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'services';
         value: number | Service;
+      } | null)
+    | ({
+        relationTo: 'testimonials';
+        value: number | Testimonial;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -424,6 +473,22 @@ export interface ServicesSelect<T extends boolean = true> {
   image?: T;
   order?: T;
   isPopular?: T;
+  isActive?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials_select".
+ */
+export interface TestimonialsSelect<T extends boolean = true> {
+  content?: T;
+  authorName?: T;
+  authorRole?: T;
+  authorAvatar?: T;
+  rating?: T;
+  source?: T;
+  order?: T;
   isActive?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -626,6 +691,15 @@ export interface Homepage {
      */
     description?: string | null;
   };
+  /**
+   * Testimonials section heading. Items managed in Testimonials collection.
+   */
+  testimonialsSection: {
+    isEnabled?: boolean | null;
+    eyebrow?: string | null;
+    title: string;
+    description?: string | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -693,6 +767,14 @@ export interface HomepageSelect<T extends boolean = true> {
         image?: T;
       };
   servicesSection?:
+    | T
+    | {
+        isEnabled?: T;
+        eyebrow?: T;
+        title?: T;
+        description?: T;
+      };
+  testimonialsSection?:
     | T
     | {
         isEnabled?: T;
