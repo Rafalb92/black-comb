@@ -303,6 +303,7 @@ export const SiteSettings: GlobalConfig = {
                       },
                       validate: (value: string | null | undefined) => {
                         if (!value) return 'URL wymagany'
+                        if (value.startsWith('/')) return true
                         try {
                           new URL(value)
                           return true
@@ -314,6 +315,97 @@ export const SiteSettings: GlobalConfig = {
                   ],
                 },
               ],
+            },
+          ],
+        },
+        {
+          label: { pl: 'Stopka', en: 'Footer' },
+          fields: [
+            {
+              name: 'footerTagline',
+              label: { pl: 'Krótki opis (tagline)', en: 'Tagline' },
+              type: 'textarea',
+              maxLength: 200,
+              admin: {
+                description: {
+                  pl: 'Krótki tekst pod logo w stopce. 1-2 zdania. Np. „Barbershop z duszą. Klasyczne strzyżenie męskie we Wrocławiu.".',
+                  en: 'Short text under the logo in the footer. 1-2 sentences.',
+                },
+              },
+            },
+            {
+              name: 'copyrightText',
+              label: { pl: 'Tekst copyright', en: 'Copyright text' },
+              type: 'text',
+              required: true,
+              defaultValue: 'Black Comb. Wszelkie prawa zastrzeżone.',
+              admin: {
+                description: {
+                  pl: 'Tekst wyświetlany w dolnym pasku stopki. Rok aktualny zostanie dodany automatycznie. Wpisz tylko nazwę i resztę, np. „Black Comb. Wszelkie prawa zastrzeżone.".',
+                  en: 'Footer bottom bar text. Current year added automatically.',
+                },
+              },
+            },
+            {
+              name: 'legalLinks',
+              label: { pl: 'Linki prawne', en: 'Legal Links' },
+              type: 'array',
+              maxRows: 4,
+              labels: {
+                singular: { pl: 'Link', en: 'Link' },
+                plural: { pl: 'Linki', en: 'Links' },
+              },
+              admin: {
+                description: {
+                  pl: 'Opcjonalne linki w dolnym pasku stopki — polityka prywatności, regulamin, RODO. Max 4.',
+                  en: 'Optional links in footer bottom bar — privacy policy, terms, etc.',
+                },
+              },
+              fields: [
+                {
+                  type: 'row',
+                  fields: [
+                    {
+                      name: 'label',
+                      label: { pl: 'Etykieta', en: 'Label' },
+                      type: 'text',
+                      required: true,
+                      admin: {
+                        width: '40%',
+                        description: {
+                          pl: 'Np. „Polityka prywatności", „Regulamin".',
+                          en: 'E.g. "Privacy Policy", "Terms".',
+                        },
+                      },
+                    },
+                    {
+                      name: 'url',
+                      label: { pl: 'URL', en: 'URL' },
+                      type: 'text',
+                      required: true,
+                      admin: {
+                        width: '60%',
+                        description: {
+                          pl: 'Ścieżka wewnętrzna (np. „/polityka-prywatnosci") lub pełen URL (https://...).',
+                          en: 'Internal path or full URL.',
+                        },
+                      },
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: 'showOpeningHoursInFooter',
+              label: { pl: 'Pokaż godziny w stopce', en: 'Show opening hours' },
+              type: 'checkbox',
+              defaultValue: true,
+              admin: {
+                description: {
+                  pl: 'Czy w stopce ma być widoczna sekcja z godzinami otwarcia. Same godziny edytujesz w zakładce „Kontakt".',
+                  en: 'Whether to show opening hours in the footer.',
+                },
+              },
             },
           ],
         },

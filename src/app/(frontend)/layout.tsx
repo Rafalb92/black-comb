@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import '../globals.css'
 import { NavbarClient } from '@/components/navbar-client'
 import { Toaster } from 'sonner'
+import { FooterClient } from '@/components/footer-client'
 
 export const metadata: Metadata = {
   title: 'Black Comb — Barbershop',
@@ -21,6 +22,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body>
         <NavbarClient initialData={settings} />
         {children}
+        <FooterClient initialData={settings} />
         <Toaster position="bottom-right" theme="light" richColors />
       </body>
     </html>
