@@ -612,6 +612,34 @@ export interface SiteSetting {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Short text under the logo in the footer. 1-2 sentences.
+   */
+  footerTagline?: string | null;
+  /**
+   * Footer bottom bar text. Current year added automatically.
+   */
+  copyrightText: string;
+  /**
+   * Optional links in footer bottom bar — privacy policy, terms, etc.
+   */
+  legalLinks?:
+    | {
+        /**
+         * E.g. "Privacy Policy", "Terms".
+         */
+        label: string;
+        /**
+         * Internal path or full URL.
+         */
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Whether to show opening hours in the footer.
+   */
+  showOpeningHoursInFooter?: boolean | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -807,6 +835,16 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         url?: T;
         id?: T;
       };
+  footerTagline?: T;
+  copyrightText?: T;
+  legalLinks?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        id?: T;
+      };
+  showOpeningHoursInFooter?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

@@ -1,6 +1,7 @@
 'use client'
 
 import dynamic from 'next/dynamic'
+import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -225,12 +226,12 @@ export function Contact({ sectionData, settings }: Props) {
                     <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-400">
                       Telefon
                     </p>
-                    <a
+                    <Link
                       href={`tel:${phone}`}
                       className="mt-1 block text-sm font-medium text-[#131315] hover:underline"
                     >
                       {phone}
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -246,12 +247,12 @@ export function Contact({ sectionData, settings }: Props) {
                     <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-400">
                       E-mail
                     </p>
-                    <a
+                    <Link
                       href={`mailto:${email}`}
                       className="mt-1 block text-sm font-medium text-[#131315] hover:underline break-all"
                     >
                       {email}
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -324,7 +325,7 @@ export function Contact({ sectionData, settings }: Props) {
                     </p>
                     <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1">
                       {social.map((link) => (
-                        <a
+                        <Link
                           key={link.id}
                           href={link.url}
                           target="_blank"
@@ -332,7 +333,7 @@ export function Contact({ sectionData, settings }: Props) {
                           className="text-sm font-medium capitalize text-[#131315] hover:underline"
                         >
                           {link.platform}
-                        </a>
+                        </Link>
                       ))}
                     </div>
                   </div>
