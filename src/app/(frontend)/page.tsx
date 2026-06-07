@@ -5,7 +5,7 @@ import { HomepageClient } from '@/components/homepage-client'
 export default async function HomePage() {
   const payload = await getPayload({ config })
 
-  const [homepage, services, testimonials] = await Promise.all([
+  const [homepage, services, testimonials, settings] = await Promise.all([
     payload.findGlobal({ slug: 'homepage', depth: 2 }),
     payload.find({
       collection: 'services',
@@ -21,6 +21,7 @@ export default async function HomePage() {
       limit: 100,
       depth: 1,
     }),
+    payload.findGlobal({ slug: 'siteSettings', depth: 1 }),
   ])
 
   return (
@@ -28,6 +29,7 @@ export default async function HomePage() {
       initialData={homepage}
       initialServices={services.docs}
       initialTestimonials={testimonials.docs}
+      initialSettings={settings}
     />
   )
 }

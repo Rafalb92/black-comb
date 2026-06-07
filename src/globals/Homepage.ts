@@ -375,5 +375,63 @@ export const Homepage: GlobalConfig = {
         },
       ],
     },
+    {
+      name: 'contactSection',
+      label: { pl: 'Sekcja Kontakt', en: 'Contact Section' },
+      type: 'group',
+      admin: {
+        description: {
+          pl: 'Sekcja z formularzem kontaktowym i mapą. Dane kontaktowe edytujesz w Ustawieniach strony → Kontakt.',
+          en: 'Section with contact form and map. Contact data is managed in Site Settings → Contact.',
+        },
+      },
+      fields: [
+        {
+          name: 'isEnabled',
+          label: { pl: 'Pokazuj sekcję', en: 'Show section' },
+          type: 'checkbox',
+          defaultValue: true,
+        },
+        {
+          name: 'eyebrow',
+          label: { pl: 'Etykieta nad tytułem', en: 'Eyebrow' },
+          type: 'text',
+        },
+        {
+          name: 'title',
+          label: { pl: 'Tytuł', en: 'Title' },
+          type: 'text',
+          required: true,
+          defaultValue: 'Kontakt',
+        },
+        {
+          name: 'description',
+          label: { pl: 'Opis pod tytułem', en: 'Description' },
+          type: 'textarea',
+        },
+        {
+          name: 'formCtaLabel',
+          label: { pl: 'Tekst przycisku formularza', en: 'Form button label' },
+          type: 'text',
+          required: true,
+          defaultValue: 'Wyślij wiadomość',
+        },
+        {
+          name: 'mapZoom',
+          label: { pl: 'Zoom mapy', en: 'Map zoom' },
+          type: 'number',
+          defaultValue: 15,
+          min: 10,
+          max: 19,
+          admin: {
+            step: 1,
+            description: {
+              pl: 'Od 10 (dalej) do 19 (bliżej). 15 to dobry default dla widoku ulicy.',
+              en: 'From 10 (further) to 19 (closer). 15 is good for street view.',
+            },
+          },
+        },
+      ],
+    },
   ],
 }

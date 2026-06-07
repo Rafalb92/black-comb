@@ -2,7 +2,7 @@ import { getPayloadClient } from '@/lib/payload'
 import type { Metadata } from 'next'
 import '../globals.css'
 import { NavbarClient } from '@/components/navbar-client'
-import { Navbar } from '@/components/navbar'
+import { Toaster } from 'sonner'
 
 export const metadata: Metadata = {
   title: 'Black Comb — Barbershop',
@@ -21,6 +21,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body>
         <NavbarClient initialData={settings} />
         {children}
+        <Toaster position="bottom-right" theme="light" richColors />
       </body>
     </html>
   )

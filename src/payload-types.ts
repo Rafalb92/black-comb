@@ -565,6 +565,53 @@ export interface SiteSetting {
         id?: string | null;
       }[]
     | null;
+  address: {
+    /**
+     * E.g. "Świdnicka 36/4"
+     */
+    street: string;
+    postalCode: string;
+    city: string;
+  };
+  /**
+   * Latitude and longitude for the map pin.
+   */
+  coordinates: {
+    lat: number;
+    lng: number;
+  };
+  /**
+   * Any format.
+   */
+  phone: string;
+  email: string;
+  /**
+   * One row per day or group of days.
+   */
+  openingHours: {
+    /**
+     * E.g. "Mon-Fri", "Saturday".
+     */
+    days: string;
+    /**
+     * E.g. "10:00 — 20:00" or "Closed".
+     */
+    hours: string;
+    id?: string | null;
+  }[];
+  /**
+   * Optional social media links.
+   */
+  social?:
+    | {
+        platform: 'instagram' | 'facebook' | 'tiktok' | 'youtube' | 'x' | 'linkedin';
+        /**
+         * Full URL with https://
+         */
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -700,6 +747,20 @@ export interface Homepage {
     title: string;
     description?: string | null;
   };
+  /**
+   * Section with contact form and map. Contact data is managed in Site Settings → Contact.
+   */
+  contactSection: {
+    isEnabled?: boolean | null;
+    eyebrow?: string | null;
+    title: string;
+    description?: string | null;
+    formCtaLabel: string;
+    /**
+     * From 10 (further) to 19 (closer). 15 is good for street view.
+     */
+    mapZoom?: number | null;
+  };
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -715,6 +776,35 @@ export interface SiteSettingsSelect<T extends boolean = true> {
     | {
         label?: T;
         anchor?: T;
+        id?: T;
+      };
+  address?:
+    | T
+    | {
+        street?: T;
+        postalCode?: T;
+        city?: T;
+      };
+  coordinates?:
+    | T
+    | {
+        lat?: T;
+        lng?: T;
+      };
+  phone?: T;
+  email?: T;
+  openingHours?:
+    | T
+    | {
+        days?: T;
+        hours?: T;
+        id?: T;
+      };
+  social?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
         id?: T;
       };
   updatedAt?: T;
@@ -781,6 +871,16 @@ export interface HomepageSelect<T extends boolean = true> {
         eyebrow?: T;
         title?: T;
         description?: T;
+      };
+  contactSection?:
+    | T
+    | {
+        isEnabled?: T;
+        eyebrow?: T;
+        title?: T;
+        description?: T;
+        formCtaLabel?: T;
+        mapZoom?: T;
       };
   updatedAt?: T;
   createdAt?: T;
