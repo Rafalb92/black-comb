@@ -9,7 +9,7 @@ type Props = {
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <p className="border-l-2 border-zinc-700 pl-3 text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-600">
+    <p className="border-l-2 border-zinc-700 pl-3 text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-400">
       {children}
     </p>
   )
@@ -56,7 +56,7 @@ export function Footer({ settings }: Props) {
   )
 
   return (
-    <footer className="bg-[#131315] text-zinc-400">
+    <footer className="bg-zinc-900 text-zinc-400">
       {/* Dekoracyjna linia na górze */}
       <div className="h-px bg-linear-to-r from-transparent via-zinc-700 to-transparent" />
 
@@ -82,7 +82,7 @@ export function Footer({ settings }: Props) {
             </Link>
 
             {footerTagline ? (
-              <p className="max-w-xs text-sm leading-relaxed text-zinc-500">{footerTagline}</p>
+              <p className="max-w-xs text-sm leading-relaxed text-zinc-400">{footerTagline}</p>
             ) : null}
 
             {socialLinks.length > 0 ? (
@@ -91,11 +91,11 @@ export function Footer({ settings }: Props) {
                   <li key={link.id ?? link.url}>
                     <ExternalLink
                       href={link.url}
-                      className="group flex items-center gap-1 text-[0.7rem] font-semibold uppercase tracking-[0.15em] text-zinc-500 transition-colors hover:text-white"
+                      className="group flex items-center gap-1 text-[0.7rem] font-semibold uppercase tracking-[0.15em] text-zinc-400 transition-colors hover:text-white"
                     >
-                      <span className="text-zinc-700 transition-colors group-hover:text-zinc-500">[</span>
+                      <span className="text-zinc-600 transition-colors group-hover:text-zinc-400">[</span>
                       {link.platform}
-                      <span className="text-zinc-700 transition-colors group-hover:text-zinc-500">]</span>
+                      <span className="text-zinc-600 transition-colors group-hover:text-zinc-400">]</span>
                     </ExternalLink>
                   </li>
                 ))}
@@ -139,7 +139,7 @@ export function Footer({ settings }: Props) {
                   {hours.map((row, i) => (
                     <li key={row.id ?? i} className="flex justify-between gap-8">
                       <span className="text-zinc-400">{row.days}</span>
-                      <span className="tabular-nums text-zinc-600">{row.hours}</span>
+                      <span className="tabular-nums text-zinc-500">{row.hours}</span>
                     </li>
                   ))}
                 </ul>
@@ -156,11 +156,11 @@ export function Footer({ settings }: Props) {
                   <li key={link.id ?? link.anchor}>
                     <Link
                       href={`#${link.anchor}`}
-                      className="group flex items-center gap-1 text-[0.7rem] font-semibold uppercase tracking-[0.15em] text-zinc-500 transition-colors hover:text-white"
+                      className="group flex items-center gap-1 text-[0.7rem] font-semibold uppercase tracking-[0.15em] text-zinc-400 transition-colors hover:text-white"
                     >
-                      <span className="text-zinc-700 transition-colors group-hover:text-zinc-500">[</span>
+                      <span className="text-zinc-600 transition-colors group-hover:text-zinc-400">[</span>
                       {link.label}
-                      <span className="text-zinc-700 transition-colors group-hover:text-zinc-500">]</span>
+                      <span className="text-zinc-600 transition-colors group-hover:text-zinc-400">]</span>
                     </Link>
                   </li>
                 ))}
@@ -171,7 +171,7 @@ export function Footer({ settings }: Props) {
 
         {/* Dolny pasek */}
         <div className="mt-16 flex flex-col items-start justify-between gap-4 border-t border-zinc-800 pt-8 text-xs sm:flex-row sm:items-center">
-          <p className="text-zinc-600">
+          <p className="text-zinc-500">
             © {year} {copyrightText}
           </p>
           {legals.length > 0 ? (
@@ -179,11 +179,11 @@ export function Footer({ settings }: Props) {
               {legals.map((link) => (
                 <li key={link.id ?? link.url}>
                   {isInternalLink(link.url) ? (
-                    <Link href={link.url} className="text-zinc-600 transition-colors hover:text-zinc-300">
+                    <Link href={link.url} className="text-zinc-500 transition-colors hover:text-zinc-200">
                       {link.label}
                     </Link>
                   ) : (
-                    <ExternalLink href={link.url} className="text-zinc-600 transition-colors hover:text-zinc-300">
+                    <ExternalLink href={link.url} className="text-zinc-500 transition-colors hover:text-zinc-200">
                       {link.label}
                     </ExternalLink>
                   )}

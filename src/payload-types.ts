@@ -316,9 +316,9 @@ export interface Realization {
    */
   title: string;
   /**
-   * Auto-generated from title. Used in /realizations/[slug] URL.
+   * Auto-generated from title. Editable. Changing after publish breaks existing links.
    */
-  slug: string;
+  slug?: string | null;
   /**
    * Category for grouping.
    */
@@ -340,6 +340,79 @@ export interface Realization {
         id?: string | null;
       }[]
     | null;
+  /**
+   * Modular content of the realization page.
+   */
+  content?:
+    | (
+        | {
+            content: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'paragraph';
+          }
+        | {
+            images?:
+              | {
+                  image: number | Media;
+                  id?: string | null;
+                }[]
+              | null;
+            /**
+             * Image display layout.
+             */
+            layout?: ('grid' | 'carousel' | 'masonry') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'gallery';
+          }
+        | {
+            content: string;
+            author: string;
+            /**
+             * Optional, e.g. "Client since 2022".
+             */
+            authorContext?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'quote';
+          }
+        | {
+            before: number | Media;
+            after: number | Media;
+            caption?: string | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'beforeAfter';
+          }
+      )[]
+    | null;
+  /**
+   * Title in Google search results.
+   */
+  metaTitle?: string | null;
+  /**
+   * Description in Google search results.
+   */
+  metaDescription?: string | null;
+  /**
+   * Used when sharing the link on social media.
+   */
+  ogImage?: (number | null) | Media;
   /**
    * Date affects sorting. Newest first.
    */
@@ -567,6 +640,51 @@ export interface RealizationsSelect<T extends boolean = true> {
         image?: T;
         id?: T;
       };
+  content?:
+    | T
+    | {
+        paragraph?:
+          | T
+          | {
+              content?: T;
+              id?: T;
+              blockName?: T;
+            };
+        gallery?:
+          | T
+          | {
+              images?:
+                | T
+                | {
+                    image?: T;
+                    id?: T;
+                  };
+              layout?: T;
+              id?: T;
+              blockName?: T;
+            };
+        quote?:
+          | T
+          | {
+              content?: T;
+              author?: T;
+              authorContext?: T;
+              id?: T;
+              blockName?: T;
+            };
+        beforeAfter?:
+          | T
+          | {
+              before?: T;
+              after?: T;
+              caption?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  metaTitle?: T;
+  metaDescription?: T;
+  ogImage?: T;
   publishedAt?: T;
   isFeatured?: T;
   isActive?: T;
