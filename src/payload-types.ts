@@ -71,6 +71,7 @@ export interface Config {
     media: Media;
     services: Service;
     testimonials: Testimonial;
+    realizations: Realization;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -82,6 +83,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     services: ServicesSelect<false> | ServicesSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
+    realizations: RealizationsSelect<false> | RealizationsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -302,6 +304,58 @@ export interface Testimonial {
   createdAt: string;
 }
 /**
+ * Realizations displayed on the homepage and /realizations subpage.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "realizations".
+ */
+export interface Realization {
+  id: number;
+  /**
+   * Realization name.
+   */
+  title: string;
+  /**
+   * Auto-generated from title. Used in /realizations/[slug] URL.
+   */
+  slug: string;
+  /**
+   * Category for grouping.
+   */
+  category: 'haircut' | 'beard' | 'combo' | 'styling' | 'other';
+  /**
+   * One-two sentences on the card. Max 200 characters.
+   */
+  shortDescription: string;
+  /**
+   * Main image for the card and realization page header.
+   */
+  coverImage: number | Media;
+  /**
+   * Additional images. Shown on the realization detail page.
+   */
+  gallery?:
+    | {
+        image: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Date affects sorting. Newest first.
+   */
+  publishedAt: string;
+  /**
+   * Show "Featured" badge on the card.
+   */
+  isFeatured?: boolean | null;
+  /**
+   * Uncheck to hide without losing slug.
+   */
+  isActive?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -340,6 +394,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'testimonials';
         value: number | Testimonial;
+      } | null)
+    | ({
+        relationTo: 'realizations';
+        value: number | Realization;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -489,6 +547,28 @@ export interface TestimonialsSelect<T extends boolean = true> {
   rating?: T;
   source?: T;
   order?: T;
+  isActive?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "realizations_select".
+ */
+export interface RealizationsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  category?: T;
+  shortDescription?: T;
+  coverImage?: T;
+  gallery?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
+  publishedAt?: T;
+  isFeatured?: T;
   isActive?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -767,6 +847,20 @@ export interface Homepage {
     description?: string | null;
   };
   /**
+   * Realizations section heading. Items managed in Realizations collection.
+   */
+  realizationsSection: {
+    isEnabled?: boolean | null;
+    eyebrow?: string | null;
+    title: string;
+    description?: string | null;
+    /**
+     * Number of realizations on home. Rest available via "See all" link.
+     */
+    displayLimit?: number | null;
+    ctaLabel?: string | null;
+  };
+  /**
    * Testimonials section heading. Items managed in Testimonials collection.
    */
   testimonialsSection: {
@@ -901,6 +995,16 @@ export interface HomepageSelect<T extends boolean = true> {
         eyebrow?: T;
         title?: T;
         description?: T;
+      };
+  realizationsSection?:
+    | T
+    | {
+        isEnabled?: T;
+        eyebrow?: T;
+        title?: T;
+        description?: T;
+        displayLimit?: T;
+        ctaLabel?: T;
       };
   testimonialsSection?:
     | T

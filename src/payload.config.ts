@@ -14,6 +14,7 @@ import { SiteSettings } from './globals/SiteSettings'
 import { Homepage } from './globals/Homepage'
 import { Services } from './collections/Services'
 import { Testimonials } from './collections/Testimonials'
+import { Realizations } from './collections/Realizations'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -53,7 +54,7 @@ export default buildConfig({
       ],
     },
   },
-  collections: [Users, Media, Services, Testimonials],
+  collections: [Users, Media, Services, Testimonials, Realizations],
   globals: [SiteSettings, Homepage],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

@@ -1,19 +1,21 @@
 'use client'
 
 import { useLivePreview } from '@payloadcms/live-preview-react'
-import type { Homepage, Service, SiteSetting, Testimonial } from '@/payload-types'
+import type { Homepage, Realization, Service, SiteSetting, Testimonial } from '@/payload-types'
 import { Hero } from '@/components/sections/Hero'
 import { KeywordsBanner } from '@/components/sections/KeywordsBanner'
 import { About } from '@/components/sections/About'
 import { Services } from '@/components/sections/Services'
 import { Testimonials } from '@/components/sections/Testimonials'
 import { Contact } from './sections/Contact'
+import { Realizations } from './sections/Realizations'
 
 type Props = {
   initialData: Homepage
   initialServices: Service[]
   initialTestimonials: Testimonial[]
   initialSettings: SiteSetting
+  initialRealizations: Realization[]
 }
 
 function isHomepage(value: unknown): value is Homepage {
@@ -25,6 +27,7 @@ export function HomepageClient({
   initialServices,
   initialTestimonials,
   initialSettings,
+  initialRealizations,
 }: Props) {
   const { data } = useLivePreview<Homepage>({
     initialData,
@@ -41,6 +44,12 @@ export function HomepageClient({
       {safeData.servicesSection?.isEnabled && (
         <Services sectionData={safeData.servicesSection} services={initialServices} />
       )}
+      {safeData.realizationsSection?.isEnabled ? (
+        <Realizations
+          sectionData={safeData.realizationsSection}
+          realizations={initialRealizations}
+        />
+      ) : null}
       {safeData.testimonialsSection?.isEnabled && (
         <Testimonials
           sectionData={safeData.testimonialsSection}
