@@ -1,12 +1,15 @@
-import { getPayload } from 'payload'
-import config from '@payload-config'
 import { HomepageClient } from '@/components/homepage-client'
+import { getPayloadClient } from '@/lib/payload'
 
 export default async function HomePage() {
-  const payload = await getPayload({ config })
+  const payload = await getPayloadClient()
 
-  const [homepage, services, testimonials, settings] = await Promise.all([
-    payload.findGlobal({ slug: 'homepage', depth: 2 }),
+  // Najpierw homepage żeby znać displayLimit
+  const homepage = await payload.findGlobal({ slug: 'homepage', depth: 2 })
+  const realizationsLimit = homepage?.realizationsSection?.displayLimit ?? 4
+
+  // Reszta równolegle
+  const [services, testimonials, realizations, settings] = await Promise.all([
     payload.find({
       collection: 'services',
       where: { isActive: { equals: true } },
@@ -21,6 +24,13 @@ export default async function HomePage() {
       limit: 100,
       depth: 1,
     }),
+    payload.find({
+      collection: 'realizations',
+      where: { isActive: { equals: true } },
+      sort: '-publishedAt',
+      limit: realizationsLimit,
+      depth: 1,
+    }),
     payload.findGlobal({ slug: 'siteSettings', depth: 1 }),
   ])
 
@@ -29,6 +39,7 @@ export default async function HomePage() {
       initialData={homepage}
       initialServices={services.docs}
       initialTestimonials={testimonials.docs}
+      initialRealizations={realizations.docs}
       initialSettings={settings}
     />
   )

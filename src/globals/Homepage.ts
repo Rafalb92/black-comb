@@ -340,6 +340,62 @@ export const Homepage: GlobalConfig = {
       ],
     },
     {
+      name: 'realizationsSection',
+      label: { pl: 'Sekcja Realizacje', en: 'Realizations Section' },
+      type: 'group',
+      admin: {
+        description: {
+          pl: 'Nagłówek sekcji Realizacje na stronie głównej. Same realizacje dodajesz w kolekcji "Realizacje". Sekcja pokazuje najnowsze.',
+          en: 'Realizations section heading. Items managed in Realizations collection.',
+        },
+      },
+      fields: [
+        {
+          name: 'isEnabled',
+          label: { pl: 'Pokazuj sekcję', en: 'Show section' },
+          type: 'checkbox',
+          defaultValue: true,
+        },
+        {
+          name: 'eyebrow',
+          label: { pl: 'Etykieta nad tytułem', en: 'Eyebrow' },
+          type: 'text',
+        },
+        {
+          name: 'title',
+          label: { pl: 'Tytuł', en: 'Title' },
+          type: 'text',
+          required: true,
+          defaultValue: 'Realizacje',
+        },
+        {
+          name: 'description',
+          label: { pl: 'Opis', en: 'Description' },
+          type: 'textarea',
+        },
+        {
+          name: 'displayLimit',
+          label: { pl: 'Ile pokazać na stronie głównej', en: 'How many to show on home' },
+          type: 'number',
+          defaultValue: 4,
+          min: 2,
+          max: 8,
+          admin: {
+            description: {
+              pl: 'Liczba realizacji widocznych na home. Reszta dostępna w „Zobacz wszystkie".',
+              en: 'Number of realizations on home. Rest available via "See all" link.',
+            },
+          },
+        },
+        {
+          name: 'ctaLabel',
+          label: { pl: 'Tekst przycisku „Zobacz wszystkie"', en: 'CTA label' },
+          type: 'text',
+          defaultValue: 'Zobacz wszystkie realizacje',
+        },
+      ],
+    },
+    {
       name: 'testimonialsSection',
       label: { pl: 'Sekcja Opinie', en: 'Testimonials Section' },
       type: 'group',
