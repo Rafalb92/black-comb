@@ -28,7 +28,7 @@ function StarRating({ value }: { value: number }) {
           <div key={star} className="relative size-4">
             <svg
               viewBox="0 0 20 20"
-              className="absolute inset-0 size-full fill-zinc-700"
+              className="absolute inset-0 size-full fill-zinc-200"
               aria-hidden
             >
               <path d="M10 15.27L16.18 19l-1.64-7.03L20 7.24l-7.19-.61L10 0 7.19 6.63 0 7.24l5.46 4.73L3.82 19z" />
@@ -36,7 +36,7 @@ function StarRating({ value }: { value: number }) {
             <div className="absolute inset-0 overflow-hidden" style={{ width: `${pct}%` }}>
               <svg
                 viewBox="0 0 20 20"
-                className="size-4 fill-amber-400"
+                className="size-4 fill-[#131315]"
                 aria-hidden
                 preserveAspectRatio="xMinYMid meet"
               >
@@ -162,23 +162,23 @@ export function Testimonials({ sectionData, testimonials }: Props) {
   return (
     <section
       id="opinie"
-      className="scroll-mt-20 bg-[#131315] px-8 py-16 lg:px-16 lg:py-24 xl:px-24"
+      className="scroll-mt-20 bg-white px-6 py-24 lg:px-10 lg:py-32"
     >
       <div className="mx-auto max-w-7xl">
         {/* Header row */}
         <div className="mb-12 flex flex-col gap-8 sm:flex-row sm:items-end sm:justify-between lg:mb-16">
           <div>
-            <div className="mb-8 h-px w-10 bg-zinc-700" />
+            <div className="mb-8 h-px w-10 bg-zinc-200" />
             {eyebrow && (
-              <span className="mb-4 block text-[0.72rem] font-semibold uppercase tracking-[0.15em] text-zinc-500">
+              <span className="mb-4 block text-[0.72rem] font-semibold uppercase tracking-[0.15em] text-zinc-400">
                 {eyebrow}
               </span>
             )}
-            <h2 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-5xl">
+            <h2 className="text-4xl font-extrabold leading-[1.05] tracking-tight text-[#131315] sm:text-5xl">
               {title}
             </h2>
             {description && (
-              <p className="mt-4 max-w-xl text-base leading-relaxed text-zinc-400 sm:text-lg">
+              <p className="mt-4 max-w-xl text-base leading-relaxed text-zinc-500 sm:text-lg">
                 {description}
               </p>
             )}
@@ -189,7 +189,7 @@ export function Testimonials({ sectionData, testimonials }: Props) {
             <button
               onClick={() => navigate(-1)}
               aria-label="Poprzednia opinia"
-              className="flex h-12 w-12 items-center justify-center rounded-full border border-zinc-700 text-zinc-400 transition-colors duration-200 hover:border-zinc-500 hover:text-white"
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-zinc-200 text-zinc-400 transition-colors duration-200 hover:border-[#131315] hover:text-[#131315]"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -201,13 +201,13 @@ export function Testimonials({ sectionData, testimonials }: Props) {
                 <polyline points="15 18 9 12 15 6" />
               </svg>
             </button>
-            <span className="w-10 text-center text-sm tabular-nums text-zinc-600">
+            <span className="w-10 text-center text-sm tabular-nums text-zinc-400">
               {displayIdx + 1}&thinsp;/&thinsp;{total}
             </span>
             <button
               onClick={() => navigate(1)}
               aria-label="Następna opinia"
-              className="flex h-12 w-12 items-center justify-center rounded-full border border-zinc-700 text-zinc-400 transition-colors duration-200 hover:border-zinc-500 hover:text-white"
+              className="flex h-12 w-12 items-center justify-center rounded-full border border-zinc-200 text-zinc-400 transition-colors duration-200 hover:border-[#131315] hover:text-[#131315]"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -240,10 +240,10 @@ export function Testimonials({ sectionData, testimonials }: Props) {
                 <article
                   key={`${t.id}-${i}`}
                   style={{ width: cardWidth > 0 ? cardWidth : undefined, flexShrink: 0 }}
-                  className="flex flex-col rounded-2xl border border-zinc-800 bg-zinc-900 p-6 lg:p-8"
+                  className="flex flex-col rounded-2xl border border-zinc-100 bg-zinc-50 p-6 lg:p-8"
                 >
                   <span
-                    className="mb-2 font-serif text-6xl leading-none text-zinc-700 select-none"
+                    className="mb-2 font-serif text-6xl leading-none text-zinc-200 select-none"
                     aria-hidden="true"
                   >
                     &#8220;
@@ -251,11 +251,11 @@ export function Testimonials({ sectionData, testimonials }: Props) {
 
                   <StarRating value={t.rating} />
 
-                  <blockquote className="mt-4 flex-1 text-sm leading-relaxed text-zinc-300 sm:text-base">
+                  <blockquote className="mt-4 flex-1 text-sm leading-relaxed text-zinc-600 sm:text-base">
                     {t.content}
                   </blockquote>
 
-                  <footer className="mt-6 flex items-center gap-3 border-t border-zinc-800 pt-5">
+                  <footer className="mt-6 flex items-center gap-3 border-t border-zinc-100 pt-5">
                     {avatar?.url ? (
                       <Image
                         src={avatar.url}
@@ -267,19 +267,19 @@ export function Testimonials({ sectionData, testimonials }: Props) {
                     ) : (
                       <div
                         aria-hidden
-                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-zinc-800 text-xs font-bold text-zinc-500"
+                        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#131315] text-xs font-bold text-white"
                       >
                         {getInitials(t.authorName)}
                       </div>
                     )}
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm font-semibold text-white">{t.authorName}</p>
+                      <p className="truncate text-sm font-semibold text-[#131315]">{t.authorName}</p>
                       {t.authorRole && (
-                        <p className="truncate text-xs text-zinc-500">{t.authorRole}</p>
+                        <p className="truncate text-xs text-zinc-400">{t.authorRole}</p>
                       )}
                     </div>
                     {t.source && (
-                      <span className="shrink-0 text-[0.6rem] font-bold uppercase tracking-[0.15em] text-zinc-600">
+                      <span className="shrink-0 text-[0.6rem] font-bold uppercase tracking-[0.15em] text-zinc-400">
                         {t.source}
                       </span>
                     )}
@@ -298,7 +298,7 @@ export function Testimonials({ sectionData, testimonials }: Props) {
               onClick={() => navigateTo(i)}
               aria-label={`Opinia ${i + 1}`}
               className={`h-1 rounded-full transition-all duration-300 ${
-                i === displayIdx ? 'w-8 bg-white' : 'w-2 bg-zinc-700 hover:bg-zinc-500'
+                i === displayIdx ? 'w-8 bg-[#131315]' : 'w-2 bg-zinc-200 hover:bg-zinc-400'
               }`}
             />
           ))}

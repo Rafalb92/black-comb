@@ -1,5 +1,6 @@
 import type { CollectionConfig, FieldHook } from 'payload'
 import { revalidatePath } from 'next/cache'
+import { ParagraphBlock, BeforeAfterBlock, GalleryBlock, QuoteBlock } from '@/blocks'
 
 const slugify = (value: string): string =>
   value
@@ -9,13 +10,16 @@ const slugify = (value: string): string =>
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/(^-|-$)/g, '')
 
-const formatSlug: FieldHook = ({ value, data, operation }) => {
+const formatSlug: FieldHook = ({ value, data }) => {
+  // Jeśli klient już coś wpisał — slugifikujemy to (czyścimy znaki)
   if (typeof value === 'string' && value.length > 0) {
     return slugify(value)
   }
-  if (operation === 'create' && data?.title) {
+  // Jeśli slug pusty, ale jest title — generujemy z title
+  if (data?.title) {
     return slugify(data.title)
   }
+  // W przypadku gdy nie ma ani slug ani title — zostawiamy puste, walidacja przepuszcza
   return value
 }
 
@@ -62,7 +66,7 @@ export const Realizations: CollectionConfig = {
       name: 'slug',
       label: { pl: 'Identyfikator URL', en: 'Slug' },
       type: 'text',
-      required: true,
+      required: false, // ← zmieniamy z true na false
       unique: true,
       index: true,
       hooks: {
@@ -71,8 +75,8 @@ export const Realizations: CollectionConfig = {
       admin: {
         position: 'sidebar',
         description: {
-          pl: 'Generowany z tytułu. Używany w adresie /realizacje/[slug]. Po publikacji zmiana łamie istniejące linki.',
-          en: 'Auto-generated from title. Used in /realizations/[slug] URL.',
+          pl: 'Generowany z tytułu. Możesz nadpisać. Po publikacji zmiana łamie istniejące linki.',
+          en: 'Auto-generated from title. Editable. Changing after publish breaks existing links.',
         },
       },
     },
@@ -144,6 +148,64 @@ export const Realizations: CollectionConfig = {
           type: 'upload',
           relationTo: 'media',
           required: true,
+        },
+      ],
+    },
+    {
+      name: 'content',
+      label: { pl: 'Treść realizacji', en: 'Realization content' },
+      type: 'blocks',
+      blocks: [ParagraphBlock, GalleryBlock, QuoteBlock, BeforeAfterBlock],
+      admin: {
+        description: {
+          pl: 'Modularna treść strony realizacji. Dodawaj klocki w dowolnej kolejności — paragrafy, galerie, cytaty klientów, zdjęcia przed/po.',
+          en: 'Modular content of the realization page.',
+        },
+      },
+    },
+    {
+      type: 'tabs',
+      tabs: [
+        {
+          label: { pl: 'SEO', en: 'SEO' },
+          fields: [
+            {
+              name: 'metaTitle',
+              label: { pl: 'Tytuł SEO', en: 'Meta title' },
+              type: 'text',
+              maxLength: 60,
+              admin: {
+                description: {
+                  pl: 'Tytuł w wynikach Google. Jeśli puste, użyty zostanie tytuł realizacji. Idealnie 50-60 znaków.',
+                  en: 'Title in Google search results.',
+                },
+              },
+            },
+            {
+              name: 'metaDescription',
+              label: { pl: 'Opis SEO', en: 'Meta description' },
+              type: 'textarea',
+              maxLength: 160,
+              admin: {
+                description: {
+                  pl: 'Opis w wynikach Google. Jeśli puste, użyty zostanie krótki opis. Idealnie 140-160 znaków.',
+                  en: 'Description in Google search results.',
+                },
+              },
+            },
+            {
+              name: 'ogImage',
+              label: { pl: 'Obrazek do social media', en: 'OG image' },
+              type: 'upload',
+              relationTo: 'media',
+              admin: {
+                description: {
+                  pl: 'Wyświetlany przy udostępnianiu linka na Facebooku, Twitterze itp. Jeśli puste, użyte zdjęcie główne. Idealnie 1200x630.',
+                  en: 'Used when sharing the link on social media.',
+                },
+              },
+            },
+          ],
         },
       ],
     },

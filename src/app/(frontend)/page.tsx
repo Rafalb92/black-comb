@@ -4,12 +4,9 @@ import { getPayloadClient } from '@/lib/payload'
 export default async function HomePage() {
   const payload = await getPayloadClient()
 
-  // Najpierw homepage żeby znać displayLimit
-  const homepage = await payload.findGlobal({ slug: 'homepage', depth: 2 })
-  const realizationsLimit = homepage?.realizationsSection?.displayLimit ?? 4
-
-  // Reszta równolegle
-  const [services, testimonials, realizations, settings] = await Promise.all([
+  // Wszystkie zapytania równolegle
+  const [homepage, services, testimonials, realizations, settings] = await Promise.all([
+    payload.findGlobal({ slug: 'homepage', depth: 2 }),
     payload.find({
       collection: 'services',
       where: { isActive: { equals: true } },
@@ -28,7 +25,7 @@ export default async function HomePage() {
       collection: 'realizations',
       where: { isActive: { equals: true } },
       sort: '-publishedAt',
-      limit: realizationsLimit,
+      limit: 3,
       depth: 1,
     }),
     payload.findGlobal({ slug: 'siteSettings', depth: 1 }),
