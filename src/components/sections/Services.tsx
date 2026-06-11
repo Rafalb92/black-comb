@@ -10,7 +10,6 @@ import {
   AccordionTrigger,
 } from '@/components/ui/accordion'
 
-import { Button } from '@/components/ui/button'
 type Props = {
   sectionData: NonNullable<Homepage['servicesSection']>
   services: Service[]
@@ -24,14 +23,12 @@ export function Services({ sectionData, services }: Props) {
   const active = services.filter((s) => s.isActive !== false)
   const { eyebrow, title, description } = sectionData
 
-  const [openId, setOpenId] = useState<string | number | null>(active[0]?.id ?? null)
+  const [activeId, setActiveId] = useState<string>(active[0] ? String(active[0].id) : '')
 
   if (active.length === 0) return null
 
-  const activeService = active.find((s) => s.id === openId) ?? null
-  const activeImg = resolveImg(activeService?.image ?? null)
-
-  const [activeId, setActiveId] = useState(active[0] ? String(active[0].id) : '')
+  const activeService = active.find((s) => String(s.id) === activeId) ?? active[0]
+  const activeImg = resolveImg(activeService.image)
 
   return (
     <section
@@ -39,7 +36,6 @@ export function Services({ sectionData, services }: Props) {
       className="scroll-mt-20 border-t border-zinc-200 bg-zinc-50 px-8 py-16 lg:py-24 lg:px-16 xl:px-24"
     >
       <div className="mx-auto max-w-7xl">
-        {/* Header */}
         <div className="mb-12 lg:mb-16">
           <div className="mb-8 h-px w-10 bg-zinc-300" />
           {eyebrow && (
@@ -57,16 +53,13 @@ export function Services({ sectionData, services }: Props) {
           )}
         </div>
 
-        {/* Body */}
         <div className="flex flex-col lg:flex-row lg:items-start lg:gap-16">
-          {/* Accordion list */}
           <Accordion
             type="single"
             collapsible
-            defaultValue={activeId}
             value={activeId}
             onValueChange={(value) => setActiveId(value)}
-            className="flex-1 border-none border-zinc-200"
+            className="flex-1"
           >
             {active.map((service) => {
               const img = resolveImg(service.image)
@@ -86,17 +79,17 @@ export function Services({ sectionData, services }: Props) {
                       )}
 
                       <div className="flex items-center justify-between gap-4">
-                        <p className="text-xl lg:text-2xl font-bold tracking-tight text-[#131315] gap-3 flex items-center">
-                          <span className="text-lg  text-muted-foreground/50">
+                        <p className="flex items-center gap-3 text-xl font-bold tracking-tight text-[#131315] lg:text-2xl">
+                          <span className="text-lg text-muted-foreground/50">
                             [{service.order}]
                           </span>
                           {service.title}
                         </p>
 
-                        <p className="mt-1 text-md text-zinc-500">
+                        <p className="mt-1 text-sm text-zinc-500">
                           {service.priceLabel}
                           <span className="mx-2 text-zinc-400">|</span>
-                          {activeId && <span className="mx-2 ">{service.durationLabel}</span>}
+                          <span>{service.durationLabel}</span>
                         </p>
                       </div>
                     </div>
@@ -105,7 +98,7 @@ export function Services({ sectionData, services }: Props) {
                   <AccordionContent>
                     {img?.url && (
                       <div className="-mx-8 mb-6 lg:hidden">
-                        <div className="relative aspect-4/3 w-full overflow-hidden">
+                        <div className="relative aspect-[4/3] w-full overflow-hidden">
                           <Image
                             src={img.url}
                             alt={img.alt || service.title}
@@ -122,30 +115,28 @@ export function Services({ sectionData, services }: Props) {
                         </div>
                       </div>
                     )}
-                    {activeService && (
-                      <p className=" text-sm leading-relaxed text-zinc-500">
-                        {activeService.shortDescription}
-                      </p>
-                    )}
+
+                    <p className="text-sm leading-relaxed text-zinc-500">
+                      {service.shortDescription}
+                    </p>
                   </AccordionContent>
                 </AccordionItem>
               )
             })}
           </Accordion>
 
-          {/* Desktop sticky image panel */}
-          <div className="hidden lg:block lg:w-[38%] xl:w-[36%] ">
+          <div className="hidden lg:block lg:w-[38%] xl:w-[36%]">
             <div className="sticky top-28">
-              <div className="relative aspect-3/4 overflow-hidden rounded-3xl shadow-md">
+              <div className="relative aspect-[3/4] overflow-hidden rounded-3xl shadow-md">
                 {activeImg?.url ? (
                   <Image
                     key={activeImg.url}
                     src={activeImg.url}
-                    alt={activeImg.alt || activeService?.title || ''}
+                    alt={activeImg.alt || activeService.title}
                     fill
                     sizes="(max-width: 1024px) 0vw, 38vw"
                     loading="eager"
-                    className="object-cover transition-opacity duration-500 "
+                    className="object-cover transition-opacity duration-500"
                     style={{
                       objectPosition:
                         activeImg.focalX != null && activeImg.focalY != null
