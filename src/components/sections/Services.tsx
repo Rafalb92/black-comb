@@ -143,6 +143,7 @@ export function Services({ sectionData, services }: Props) {
                     src={activeImg.url}
                     alt={activeImg.alt || activeService?.title || ''}
                     fill
+                    sizes="(max-width: 1024px) 0vw, 38vw"
                     loading="eager"
                     className="object-cover transition-opacity duration-500 "
                     style={{

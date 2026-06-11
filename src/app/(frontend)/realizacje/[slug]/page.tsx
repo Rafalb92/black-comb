@@ -83,8 +83,11 @@ export default async function RealizationPage({ params }: Props) {
   })
 
   const currentIndex = allActive.docs.findIndex((r) => r.slug === slug)
-  const prev = currentIndex > 0 ? allActive.docs[currentIndex - 1] : null
-  const next = currentIndex < allActive.docs.length - 1 ? allActive.docs[currentIndex + 1] : null
+  const prevDoc = currentIndex > 0 ? allActive.docs[currentIndex - 1] : null
+  const nextDoc = currentIndex < allActive.docs.length - 1 ? allActive.docs[currentIndex + 1] : null
+
+  const prev = prevDoc ? { slug: prevDoc.slug, title: prevDoc.title, category: prevDoc.category } : null
+  const next = nextDoc ? { slug: nextDoc.slug, title: nextDoc.title, category: nextDoc.category } : null
 
   return <RealizationDetail realization={realization} prev={prev} next={next} />
 }
