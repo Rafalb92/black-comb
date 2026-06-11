@@ -1,6 +1,9 @@
+'use client'
+
 import type { SiteSetting, Media } from '@/payload-types'
 import Link from 'next/link'
 import Image from 'next/image'
+import { usePathname } from 'next/navigation'
 import { ExternalLink } from '@/components/extrenal-link'
 
 type Props = {
@@ -37,6 +40,8 @@ export function Footer({ settings }: Props) {
 
   const logoMedia = typeof logo === 'object' && logo !== null ? (logo as Media) : null
   const year = new Date().getFullYear()
+  const pathname = usePathname()
+  const isHomepage = pathname === '/'
 
   const links = (navLinks ?? []).filter(
     (link): link is NonNullable<typeof link> & { label: string; anchor: string } =>
@@ -155,7 +160,7 @@ export function Footer({ settings }: Props) {
                 {links.map((link) => (
                   <li key={link.id ?? link.anchor}>
                     <Link
-                      href={`#${link.anchor}`}
+                      href={isHomepage ? `#${link.anchor}` : `/#${link.anchor}`}
                       className="group flex items-center gap-1 text-[0.7rem] font-semibold uppercase tracking-[0.15em] text-zinc-400 transition-colors hover:text-white"
                     >
                       <span className="text-zinc-600 transition-colors group-hover:text-zinc-400">[</span>

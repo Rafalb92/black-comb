@@ -6,6 +6,7 @@ import { Toaster } from 'sonner'
 import { FooterClient } from '@/components/footer-client'
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SERVER_URL ?? 'http://localhost:3000'),
   title: 'Black Comb — Barbershop',
   description: 'Profesjonalny barbershop. Strzyżenie, broda, stylizacja.',
 }
@@ -18,7 +19,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   })
 
   return (
-    <html lang="pl">
+    <html lang="pl" data-scroll-behavior="smooth">
       <body>
         <NavbarClient initialData={settings} />
         {children}

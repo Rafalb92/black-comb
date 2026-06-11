@@ -1,6 +1,9 @@
+'use client'
+
 import type { SiteSetting, Media } from '@/payload-types'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { NavbarMobile } from '@/components/navbar-mobile'
 
 type Props = {
@@ -11,6 +14,8 @@ export function Navbar({ settings }: Props) {
   const { logo, brandText, navLinks } = settings
   const logoMedia = typeof logo === 'object' && logo !== null ? (logo as Media) : null
   const links = navLinks ?? []
+  const pathname = usePathname()
+  const isHomepage = pathname === '/'
 
   return (
     <header className="sticky top-0 z-50 w-full">
@@ -40,7 +45,7 @@ export function Navbar({ settings }: Props) {
           {links.map((link) => (
             <li key={link.id ?? link.anchor}>
               <Link
-                href={`#${link.anchor}`}
+                href={isHomepage ? `#${link.anchor}` : `/#${link.anchor}`}
                 className="group flex items-center gap-1.5 px-3 py-2 text-[0.72rem] font-semibold tracking-[0.15em] uppercase text-zinc-400 transition-colors duration-300 hover:text-[#131315]"
               >
                 <span className="text-zinc-300 transition-colors duration-300 group-hover:text-zinc-500">
@@ -66,7 +71,7 @@ export function Navbar({ settings }: Props) {
         </ul>
 
         {/* Mobile menu */}
-        <NavbarMobile brandText={brandText} links={links} />
+        <NavbarMobile brandText={brandText} links={links} isHomepage={isHomepage} />
       </nav>
     </header>
   )

@@ -21,9 +21,10 @@ type NavLink = {
 type Props = {
   brandText: string
   links: NavLink[]
+  isHomepage: boolean
 }
 
-export function NavbarMobile({ brandText, links }: Props) {
+export function NavbarMobile({ brandText, links, isHomepage }: Props) {
   const [open, setOpen] = React.useState(false)
 
   return (
@@ -63,7 +64,7 @@ export function NavbarMobile({ brandText, links }: Props) {
             {links.map((link) => (
               <SheetClose asChild key={link.id ?? link.anchor}>
                 <Link
-                  href={`#${link.anchor}`}
+                  href={isHomepage ? `#${link.anchor}` : `/#${link.anchor}`}
                   className="flex items-center gap-2 px-3 py-3.5 text-sm font-semibold tracking-[0.15em] uppercase text-zinc-400 rounded-md hover:text-[#131315] hover:bg-zinc-50 transition-colors"
                 >
                   <span className="text-zinc-300">[</span>
