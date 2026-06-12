@@ -1,6 +1,7 @@
 import { HomepageClient } from '@/components/homepage-client'
 import { getPayloadClient } from '@/lib/payload'
 
+export const revalidate = 60 * 60 // Revalidate the page every 60 minutes
 export default async function HomePage() {
   const payload = await getPayloadClient()
 

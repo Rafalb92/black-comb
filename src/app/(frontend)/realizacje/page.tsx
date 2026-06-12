@@ -37,7 +37,12 @@ export default async function RealizationsListPage({ searchParams }: Props) {
         title="Realizacje"
         description={homepage?.realizationsSection?.description}
       />
-      <RealizationsList key={category ?? 'all'} initialList={list} counts={counts} activeCategory={category} />
+      <RealizationsList
+        key={category ?? 'all'}
+        initialList={list}
+        counts={counts}
+        activeCategory={category}
+      />
     </>
   )
 }
