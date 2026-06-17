@@ -4,7 +4,12 @@ import '../globals.css'
 import { NavbarClient } from '@/components/navbar-client'
 import { Toaster } from 'sonner'
 import { FooterClient } from '@/components/footer-client'
+import { Roboto } from 'next/font/google'
 
+const roboto = Roboto({
+  weight: '400',
+  subsets: ['latin'],
+})
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SERVER_URL ?? 'http://localhost:3000'),
   title: 'Black Comb — Barbershop',
@@ -19,7 +24,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   })
 
   return (
-    <html lang="pl" data-scroll-behavior="smooth">
+    <html lang="pl" data-scroll-behavior="smooth" className={roboto.className}>
       <body>
         <NavbarClient initialData={settings} />
         {children}

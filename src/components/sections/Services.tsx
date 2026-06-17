@@ -68,7 +68,7 @@ export function Services({ sectionData, services }: Props) {
                 <AccordionItem
                   key={service.id}
                   value={String(service.id)}
-                  className="border-b border-t border-zinc-200"
+                  className="border-t border-zinc-200"
                 >
                   <AccordionTrigger className="py-6 hover:no-underline">
                     <div className="min-w-0 flex-1 text-left">
